@@ -9,6 +9,8 @@ object main {
         val sc = Scanner(fr)
         var result = ""
         var j = 1
+        var single = 0
+        var signleSign = ""
         while (sc.hasNextLine()) {
             val line = sc.nextLine()
             var i = line[0]
@@ -17,12 +19,30 @@ object main {
                 if (k == i)
                     j++
                 else {
-                    result += j.toString() + i
+                    if (j == 1) {
+                        single++
+                        signleSign += i
+                        i = k
+                    }
+                    if (single > 0) {
+                        result += '-' + single.toString() + signleSign
+                        single = 0
+                        signleSign = ""
+                    }
+                    while (j >= 10) {
+                        result += "9"
+                        j -= 9
+                    }
+                    result += j.toString() + i.toString()
                     j = 1
                     i = k
                 }
             }
-            result += j.toString() + i
+            while (j >= 10) {
+                result += "9"
+                j /= 9
+            }
+            result += j.toString() + i.toString()
             j = 1
 
         }
@@ -42,8 +62,8 @@ object main {
 
         while (sc.hasNextLine()) {
             for (i in sc.nextLine()) {
-                if (i.toString().contains(Regex("""[0-9]""")))
-                    count = count * 10 + i.toString().toInt()
+                if (i in '1'..'9')
+                    count += 1
                 else {
                     for (j in 0..count - 1)
                         result += i.toString()
@@ -61,6 +81,7 @@ object main {
     @Throws(Exception::class)
     @JvmStatic
     fun main(args: Array<String>) {
+        z(".\\input\\input3.txt", "output3.txt")
         println("Введите команду, путь к исходному файлу и имя выходного файла через точку с запятой")
         val list = (readLine() + "").split("; ")
         when (list[0]) {
