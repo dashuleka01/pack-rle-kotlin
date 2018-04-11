@@ -16,34 +16,38 @@ object main {
             var i = line[0]
             j = 1
             for (k in line.substring(1, line.length)) {
-                if (k == i)
+                if (k == i && j < 9)
                     j++
                 else {
-                    if (j == 1) {
+                    if(j == 1){
                         single++
-                        signleSign += i
+                        signleSign += i.toString()
                         i = k
                     }
-                    if (single > 0) {
-                        result += '-' + single.toString() + signleSign
-                        single = 0
-                        signleSign = ""
+                    else{
+                        if (single > 0) {
+                            result += "-" + single.toString() + signleSign
+                            single = 0
+                            signleSign = ""
+                        }
+                        result += j.toString() + i
+                        j = 1
+                        i = k
                     }
-                    while (j >= 10) {
-                        result += "9"
-                        j -= 9
-                    }
-                    result += j.toString() + i.toString()
-                    j = 1
-                    i = k
                 }
             }
-            while (j >= 10) {
-                result += "9"
-                j /= 9
+            if(j == 1){
+                signleSign += i.toString()
+                single++
             }
-            result += j.toString() + i.toString()
-            j = 1
+
+            if (single > 0) {
+                result += "-" + single.toString() + signleSign
+                single = 0
+                signleSign = ""
+            }
+            if(j > 1)
+              result += j.toString() + i
 
         }
         fw.write(result)
@@ -82,12 +86,13 @@ object main {
     @JvmStatic
     fun main(args: Array<String>) {
         z(".\\input\\input3.txt", "output3.txt")
-        println("Введите команду, путь к исходному файлу и имя выходного файла через точку с запятой")
+        z(".\\input\\input1.txt", "output1.txt")
+        /*println("Введите команду, путь к исходному файлу и имя выходного файла через точку с запятой")
         val list = (readLine() + "").split("; ")
         when (list[0]) {
             "z" -> z(list[1], list[2])
             "u" -> u(list[1], list[2])
             else -> println("Несуществующая команда")
-        }
+        }*/
     }
 }
