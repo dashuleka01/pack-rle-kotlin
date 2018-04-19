@@ -15,6 +15,7 @@ class mainTest {
             fail("Illegal Argument")
         } catch (e: IllegalArgumentException) {
         }
+        File("input1.output").delete()
 
         main(arrayOf("-u", "input2.txt", "abc")) //распаковка
         assertFileContent("input2.abc",
