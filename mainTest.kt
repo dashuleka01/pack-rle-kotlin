@@ -10,21 +10,25 @@ class mainTest {
 
     @org.junit.Test
     fun main() {
-        try {
-            main(arrayOf("-u", "input1.txt"))
-            fail("Illegal Argument")
-        } catch (e: IllegalArgumentException) {
-        }
-        File("input1.output").delete()
 
-        main(arrayOf("-u", "input2.txt", "abc")) //распаковка
-        assertFileContent("input2.abc",
+        main(arrayOf("-u", "input1.txt")) //ошибка при распаковке
+        assertFileContent("error.txt",
+                "error")
+        File("error.txt").delete()
+
+        main(arrayOf("-u", "input2.txt", "-out", "abc.txt")) //распаковка
+        assertFileContent("abc.txt",
                 "bbaaakkkkkhjki")
-        File("input2.abc").delete()
+        File("abc.txt").delete()
 
         main(arrayOf("-z", "input3.txt")) //упаковка
-        assertFileContent("input3.output",
-                "7a4b5k-9tnfjik6h0-1k")
-        File("input3.output").delete()
+        assertFileContent("input3.txtout",
+                "9a4b5k-9tnfjik6h0-3kjw")
+        File("input3.txtout").delete()
+
+        main(arrayOf("-x", "input3.txt")) //ошибка
+        assertFileContent("error.txt",
+                "error")
+        File("error.txt").delete()
     }
 }
